@@ -19,21 +19,40 @@ cursor = conn.cursor()
 # cursor.executemany("INSERT INTO orders (ord_no, purch_amt, ord_date, customer_id, "
 #                    "salesman_id) VALUES (%s, %s, %s, %s, %s)", orders)
 # conn.commit()
-"""
-1)Напечатайте номер заказа, дату заказа и количество для каждого заказа,
+
+'''
+1) Напечатайте номер заказа, дату заказа и количество для каждого заказа,
 Который продал продавец под номером: 5002
-"""
+'''
 cursor.execute("SELECT * FROM orders WHERE salesman_id=5002 ")
 for i in cursor.fetchall():
     print(f"{i[1]} - {i[3]} - {i[2]}- {i[5]}")
 print("----------------------------------")
+
 '''
-3)Напечатайте по порядку данные о дате заказа, id продавца, номер заказа,
+2) Напечатайте уникальные id продавца(salesman_id). Используйте distinct
+'''
+cursor.execute("SELECT DISTINCT salesman_id FROM orders")
+unique = cursor.fetchall()
+for i in unique:
+    print(i[0])
+print("----------------------------------")
+
+'''
+3) Напечатайте по порядку данные о дате заказа, id продавца, номер заказа,
 количество
 '''
 cursor.execute("SELECT * FROM orders")
 for i in cursor.fetchall():
     print(f"{i[3]} - {i[5]} - {i[1]}- {i[2]}")
+print("----------------------------------")
+
+'''
+4)Напечатайте заказы между 70001 и 70007(используйте between, and)
+'''
+cursor.execute("SELECT ord_no FROM orders WHERE ord_no BETWEEN 70001 AND 70007")
+for i in cursor.fetchall():
+    print(i[0])
 # cursor.execute("DROP TABLE orders")
 # conn.commit()
 cursor.close()
